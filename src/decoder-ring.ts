@@ -12,7 +12,7 @@ interface Body {
   token: string;
 }
 
-const getSigningKey = async (client: JwksClient, kid: string): Promise<jwksClient.SigningKey> => {
+export const getSigningKey = async (client: JwksClient, kid: string): Promise<jwksClient.SigningKey> => {
   return new Promise<jwksClient.SigningKey>((res, rej) => {
     client.getSigningKey(kid, (err, key) => {
       if (err) {
@@ -24,7 +24,7 @@ const getSigningKey = async (client: JwksClient, kid: string): Promise<jwksClien
   });
 };
 
-const verifyToken = async (client: JwksClient, token: string) => {
+export const verifyToken = async (client: JwksClient, token: string) => {
   const decoded = decode(token, { complete: true, json: true });
   if (!decoded || !decoded.header.kid) {
     console.error('No Key ID');
@@ -44,7 +44,7 @@ const verifyToken = async (client: JwksClient, token: string) => {
 
 export const handler = async (
   event: APIGatewayProxyEvent,
-): Promise<APIGatewayProxyResult | void> => {
+): Promise<APIGatewayProxyResult> => {
   if (!event.body) {
     return {
       statusCode: 400,

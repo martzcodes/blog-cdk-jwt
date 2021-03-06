@@ -31,16 +31,16 @@ Object {
     },
   },
   "Parameters": Object {
-    "AssetParameters1a0a0f3f23dbfa9be154810c5c379d5dd22019eaa8c21f77a9bffe57f74a5621ArtifactHash54746CCF": Object {
-      "Description": "Artifact hash for asset \\"1a0a0f3f23dbfa9be154810c5c379d5dd22019eaa8c21f77a9bffe57f74a5621\\"",
+    "AssetParameters406c13f640dcc585049a179eee7cf88d42c6843268665bfbe9d9faab72c8da6dArtifactHash54FADDBF": Object {
+      "Description": "Artifact hash for asset \\"406c13f640dcc585049a179eee7cf88d42c6843268665bfbe9d9faab72c8da6d\\"",
       "Type": "String",
     },
-    "AssetParameters1a0a0f3f23dbfa9be154810c5c379d5dd22019eaa8c21f77a9bffe57f74a5621S3BucketC68BE115": Object {
-      "Description": "S3 bucket for asset \\"1a0a0f3f23dbfa9be154810c5c379d5dd22019eaa8c21f77a9bffe57f74a5621\\"",
+    "AssetParameters406c13f640dcc585049a179eee7cf88d42c6843268665bfbe9d9faab72c8da6dS3Bucket9B4D3852": Object {
+      "Description": "S3 bucket for asset \\"406c13f640dcc585049a179eee7cf88d42c6843268665bfbe9d9faab72c8da6d\\"",
       "Type": "String",
     },
-    "AssetParameters1a0a0f3f23dbfa9be154810c5c379d5dd22019eaa8c21f77a9bffe57f74a5621S3VersionKeyD1AEC231": Object {
-      "Description": "S3 key for asset version \\"1a0a0f3f23dbfa9be154810c5c379d5dd22019eaa8c21f77a9bffe57f74a5621\\"",
+    "AssetParameters406c13f640dcc585049a179eee7cf88d42c6843268665bfbe9d9faab72c8da6dS3VersionKeyC6ECD20D": Object {
+      "Description": "S3 key for asset version \\"406c13f640dcc585049a179eee7cf88d42c6843268665bfbe9d9faab72c8da6d\\"",
       "Type": "String",
     },
     "AssetParameters4cd61014b71160e8c66fe167e43710d5ba068b80b134e9bd84508cf9238b2392ArtifactHashE56CD69A": Object {
@@ -55,6 +55,18 @@ Object {
       "Description": "S3 key for asset version \\"4cd61014b71160e8c66fe167e43710d5ba068b80b134e9bd84508cf9238b2392\\"",
       "Type": "String",
     },
+    "AssetParameters86b832c55c2a9dd8d82627eaedfc8d3f7a9c07f2f1fbc3d5f924f632ace5445fArtifactHashFEBB44D3": Object {
+      "Description": "Artifact hash for asset \\"86b832c55c2a9dd8d82627eaedfc8d3f7a9c07f2f1fbc3d5f924f632ace5445f\\"",
+      "Type": "String",
+    },
+    "AssetParameters86b832c55c2a9dd8d82627eaedfc8d3f7a9c07f2f1fbc3d5f924f632ace5445fS3Bucket652B4321": Object {
+      "Description": "S3 bucket for asset \\"86b832c55c2a9dd8d82627eaedfc8d3f7a9c07f2f1fbc3d5f924f632ace5445f\\"",
+      "Type": "String",
+    },
+    "AssetParameters86b832c55c2a9dd8d82627eaedfc8d3f7a9c07f2f1fbc3d5f924f632ace5445fS3VersionKey8B9CB4EF": Object {
+      "Description": "S3 key for asset version \\"86b832c55c2a9dd8d82627eaedfc8d3f7a9c07f2f1fbc3d5f924f632ace5445f\\"",
+      "Type": "String",
+    },
     "AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cArtifactHash627DAAA7": Object {
       "Description": "Artifact hash for asset \\"c691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49c\\"",
       "Type": "String",
@@ -65,6 +77,18 @@ Object {
     },
     "AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cS3VersionKeyDD9AE9E7": Object {
       "Description": "S3 key for asset version \\"c691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49c\\"",
+      "Type": "String",
+    },
+    "AssetParametersc99f1c3bfc985c387e5385cb851b0c9e6d17c0ac8af35a2b821c6c8306d68966ArtifactHash8FA5D157": Object {
+      "Description": "Artifact hash for asset \\"c99f1c3bfc985c387e5385cb851b0c9e6d17c0ac8af35a2b821c6c8306d68966\\"",
+      "Type": "String",
+    },
+    "AssetParametersc99f1c3bfc985c387e5385cb851b0c9e6d17c0ac8af35a2b821c6c8306d68966S3Bucket0DE58DDE": Object {
+      "Description": "S3 bucket for asset \\"c99f1c3bfc985c387e5385cb851b0c9e6d17c0ac8af35a2b821c6c8306d68966\\"",
+      "Type": "String",
+    },
+    "AssetParametersc99f1c3bfc985c387e5385cb851b0c9e6d17c0ac8af35a2b821c6c8306d68966S3VersionKeyA025D6BD": Object {
+      "Description": "S3 key for asset version \\"c99f1c3bfc985c387e5385cb851b0c9e6d17c0ac8af35a2b821c6c8306d68966\\"",
       "Type": "String",
     },
   },
@@ -120,11 +144,15 @@ Object {
       },
       "Type": "AWS::ApiGateway::RestApi",
     },
-    "BlogCdkJwksApiDeployment3D9B1F0Fca1c41456acca23d12d7739386abd2c8": Object {
+    "BlogCdkJwksApiDeployment3D9B1F0F444e50f0b0e5feac42547f4d965ca463": Object {
       "DependsOn": Array [
         "BlogCdkJwksApiwellknownjwksjsonGETF029835A",
         "BlogCdkJwksApiwellknownjwksjsonDD32F4EF",
         "BlogCdkJwksApiwellknownD5A04E64",
+        "BlogCdkJwksApidecodePOSTC5AD18F9",
+        "BlogCdkJwksApidecode0FAA2B86",
+        "BlogCdkJwksApiencodePOST1331ABF0",
+        "BlogCdkJwksApiencodeAD229C43",
       ],
       "Properties": Object {
         "Description": "Automatically created by the RestApi construct",
@@ -137,7 +165,7 @@ Object {
     "BlogCdkJwksApiDeploymentStageprodC2E58CED": Object {
       "Properties": Object {
         "DeploymentId": Object {
-          "Ref": "BlogCdkJwksApiDeployment3D9B1F0Fca1c41456acca23d12d7739386abd2c8",
+          "Ref": "BlogCdkJwksApiDeployment3D9B1F0F444e50f0b0e5feac42547f4d965ca463",
         },
         "RestApiId": Object {
           "Ref": "BlogCdkJwksApiD670D619",
@@ -145,6 +173,272 @@ Object {
         "StageName": "prod",
       },
       "Type": "AWS::ApiGateway::Stage",
+    },
+    "BlogCdkJwksApidecode0FAA2B86": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "BlogCdkJwksApiD670D619",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "decode",
+        "RestApiId": Object {
+          "Ref": "BlogCdkJwksApiD670D619",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "BlogCdkJwksApidecodePOSTApiPermissionTesttestBlogCdkJwksApiD7C23B85POSTdecode5076B9D3": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "BlogCdkJwtDecoderFnEF8DE106",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "BlogCdkJwksApiD670D619",
+              },
+              "/test-invoke-stage/POST/decode",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "BlogCdkJwksApidecodePOSTApiPermissiontestBlogCdkJwksApiD7C23B85POSTdecode62F0949B": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "BlogCdkJwtDecoderFnEF8DE106",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "BlogCdkJwksApiD670D619",
+              },
+              "/",
+              Object {
+                "Ref": "BlogCdkJwksApiDeploymentStageprodC2E58CED",
+              },
+              "/POST/decode",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "BlogCdkJwksApidecodePOSTC5AD18F9": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "POST",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "BlogCdkJwtDecoderFnEF8DE106",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "BlogCdkJwksApidecode0FAA2B86",
+        },
+        "RestApiId": Object {
+          "Ref": "BlogCdkJwksApiD670D619",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "BlogCdkJwksApiencodeAD229C43": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "BlogCdkJwksApiD670D619",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "encode",
+        "RestApiId": Object {
+          "Ref": "BlogCdkJwksApiD670D619",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "BlogCdkJwksApiencodePOST1331ABF0": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "POST",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "BlogCdkJwtEncoderFn46E48CD7",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "BlogCdkJwksApiencodeAD229C43",
+        },
+        "RestApiId": Object {
+          "Ref": "BlogCdkJwksApiD670D619",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "BlogCdkJwksApiencodePOSTApiPermissionTesttestBlogCdkJwksApiD7C23B85POSTencode0767C7B8": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "BlogCdkJwtEncoderFn46E48CD7",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "BlogCdkJwksApiD670D619",
+              },
+              "/test-invoke-stage/POST/encode",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "BlogCdkJwksApiencodePOSTApiPermissiontestBlogCdkJwksApiD7C23B85POSTencode4AFADE62": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "BlogCdkJwtEncoderFn46E48CD7",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "BlogCdkJwksApiD670D619",
+              },
+              "/",
+              Object {
+                "Ref": "BlogCdkJwksApiDeploymentStageprodC2E58CED",
+              },
+              "/POST/encode",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
     },
     "BlogCdkJwksApiwellknownD5A04E64": Object {
       "Properties": Object {
@@ -522,7 +816,7 @@ Object {
             "Arn",
           ],
         },
-        "Version": "1",
+        "Version": "2",
       },
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
@@ -535,7 +829,7 @@ Object {
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
-            "Ref": "AssetParameters1a0a0f3f23dbfa9be154810c5c379d5dd22019eaa8c21f77a9bffe57f74a5621S3BucketC68BE115",
+            "Ref": "AssetParameters406c13f640dcc585049a179eee7cf88d42c6843268665bfbe9d9faab72c8da6dS3Bucket9B4D3852",
           },
           "S3Key": Object {
             "Fn::Join": Array [
@@ -548,7 +842,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters1a0a0f3f23dbfa9be154810c5c379d5dd22019eaa8c21f77a9bffe57f74a5621S3VersionKeyD1AEC231",
+                          "Ref": "AssetParameters406c13f640dcc585049a179eee7cf88d42c6843268665bfbe9d9faab72c8da6dS3VersionKeyC6ECD20D",
                         },
                       ],
                     },
@@ -561,7 +855,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters1a0a0f3f23dbfa9be154810c5c379d5dd22019eaa8c21f77a9bffe57f74a5621S3VersionKeyD1AEC231",
+                          "Ref": "AssetParameters406c13f640dcc585049a179eee7cf88d42c6843268665bfbe9d9faab72c8da6dS3VersionKeyC6ECD20D",
                         },
                       ],
                     },
@@ -677,6 +971,227 @@ Object {
         "Roles": Array [
           Object {
             "Ref": "BlogCdkJwksGeneratorServiceRoleA7E662AE",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "BlogCdkJwtDecoderFnEF8DE106": Object {
+      "DependsOn": Array [
+        "BlogCdkJwtDecoderFnServiceRoleE4120408",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParametersc99f1c3bfc985c387e5385cb851b0c9e6d17c0ac8af35a2b821c6c8306d68966S3Bucket0DE58DDE",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParametersc99f1c3bfc985c387e5385cb851b0c9e6d17c0ac8af35a2b821c6c8306d68966S3VersionKeyA025D6BD",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParametersc99f1c3bfc985c387e5385cb851b0c9e6d17c0ac8af35a2b821c6c8306d68966S3VersionKeyA025D6BD",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "BUCKET_ID": Object {
+              "Ref": "BlogCdkJwksBucketAAB673DE",
+            },
+            "NODE_ENV": "test",
+            "SECRET_ID": Object {
+              "Ref": "BlogCdkSecret2D6B12B4",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "BlogCdkJwtDecoderFnServiceRoleE4120408",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "BlogCdkJwtDecoderFnServiceRoleE4120408": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "BlogCdkJwtEncoderFn46E48CD7": Object {
+      "DependsOn": Array [
+        "BlogCdkJwtEncoderFnServiceRoleDefaultPolicyAFE933F5",
+        "BlogCdkJwtEncoderFnServiceRole0A52B914",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters86b832c55c2a9dd8d82627eaedfc8d3f7a9c07f2f1fbc3d5f924f632ace5445fS3Bucket652B4321",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters86b832c55c2a9dd8d82627eaedfc8d3f7a9c07f2f1fbc3d5f924f632ace5445fS3VersionKey8B9CB4EF",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters86b832c55c2a9dd8d82627eaedfc8d3f7a9c07f2f1fbc3d5f924f632ace5445fS3VersionKey8B9CB4EF",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "BUCKET_ID": Object {
+              "Ref": "BlogCdkJwksBucketAAB673DE",
+            },
+            "NODE_ENV": "test",
+            "SECRET_ID": Object {
+              "Ref": "BlogCdkSecret2D6B12B4",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "BlogCdkJwtEncoderFnServiceRole0A52B914",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "BlogCdkJwtEncoderFnServiceRole0A52B914": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "BlogCdkJwtEncoderFnServiceRoleDefaultPolicyAFE933F5": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "BlogCdkSecret2D6B12B4",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "BlogCdkJwtEncoderFnServiceRoleDefaultPolicyAFE933F5",
+        "Roles": Array [
+          Object {
+            "Ref": "BlogCdkJwtEncoderFnServiceRole0A52B914",
           },
         ],
       },

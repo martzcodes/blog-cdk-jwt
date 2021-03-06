@@ -35,7 +35,7 @@ describe('JwksGenerator', () => {
       Body: expect.any(String),
     });
     const body = JSON.parse(putObject.Body);
-    expect(body).toMatchSnapshot({
+    expect(body.keys[0]).toMatchSnapshot({
       kty: 'RSA',
       kid: expect.any(String),
       use: 'sig',
