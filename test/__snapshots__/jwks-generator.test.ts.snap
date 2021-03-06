@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JwksGenerator generate jwks 1`] = `
+Object {
+  "SecretId": "undefined",
+  "SecretString": Any<String>,
+}
+`;
+
+exports[`JwksGenerator generate jwks 2`] = `
+Object {
+  "alg": "RS256",
+  "d": Any<String>,
+  "dp": Any<String>,
+  "dq": Any<String>,
+  "e": Any<String>,
+  "kid": Any<String>,
+  "kty": "RSA",
+  "n": Any<String>,
+  "p": Any<String>,
+  "q": Any<String>,
+  "qi": Any<String>,
+  "use": "sig",
+}
+`;
+
+exports[`JwksGenerator generate jwks 3`] = `
+Object {
+  "ACL": "bucket-owner-full-control",
+  "Body": Any<String>,
+  "Bucket": "undefined",
+  "Key": "jwks.json",
+}
+`;
+
+exports[`JwksGenerator generate jwks 4`] = `
+Object {
+  "alg": "RS256",
+  "e": Any<String>,
+  "kid": Any<String>,
+  "kty": "RSA",
+  "n": Any<String>,
+  "use": "sig",
+}
+`;

@@ -1,10 +1,43 @@
 const { AwsCdkTypeScriptApp } = require('projen');
 
 const project = new AwsCdkTypeScriptApp({
-  cdkVersion: '1.73.0',
+  cdkVersion: '1.91.0',
   defaultReleaseBranch: 'main',
-  jsiiFqn: "projen.AwsCdkTypeScriptApp",
+  jsiiFqn: 'projen.AwsCdkTypeScriptApp',
   name: 'blog-cdk-jwt',
+  authorName: 'Matt Martz',
+  authorUrl: 'https://matt.martz.codes',
+  cdkDependencies: [
+    '@aws-cdk/aws-apigateway',
+    '@aws-cdk/aws-iam',
+    '@aws-cdk/aws-lambda-nodejs',
+    '@aws-cdk/aws-lambda',
+    '@aws-cdk/aws-s3',
+    '@aws-cdk/aws-secretsmanager',
+    '@aws-cdk/custom-resources',
+    '@aws-cdk/core',
+  ],
+  deps: ['aws-sdk', 'jsonwebtoken', 'jwks-rsa', 'node-jose'],
+  devDeps: [
+    '@types/aws-lambda',
+    '@types/jsonwebtoken',
+    '@types/node',
+    '@types/node-jose',
+    'esbuild',
+  ],
+  tsconfig: {
+    compilerOptions: {
+      esModuleInterop: true,
+    },
+  },
+
+  jestOptions: {
+    typescriptConfig: {
+      compilerOptions: {
+        esModuleInterop: true,
+      },
+    },
+  },
 
   /* AwsCdkTypeScriptAppOptions */
   // appEntrypoint: 'main.ts',                                                 /* The CDK app's entrypoint (relative to the source directory, which is "src" by default). */
