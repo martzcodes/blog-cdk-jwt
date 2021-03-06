@@ -5,6 +5,10 @@
       "type": "build"
     },
     {
+      "name": "@types/cookie",
+      "type": "build"
+    },
+    {
       "name": "@types/jest",
       "type": "build"
     },
@@ -145,6 +149,10 @@
     },
     {
       "name": "aws-sdk",
+      "type": "runtime"
+    },
+    {
+      "name": "cookie",
       "type": "runtime"
     },
     {

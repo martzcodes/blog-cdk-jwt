@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { AwsIntegration, IntegrationResponse, RestApi } from '@aws-cdk/aws-apigateway';
+import { AwsIntegration, IntegrationResponse, LambdaIntegration, RestApi } from '@aws-cdk/aws-apigateway';
 import { Role, ServicePrincipal } from '@aws-cdk/aws-iam';
 import { Runtime } from '@aws-cdk/aws-lambda';
 import { LogLevel, NodejsFunction, NodejsFunctionProps } from '@aws-cdk/aws-lambda-nodejs';
@@ -58,7 +58,7 @@ export class BlogCdkJwksStack extends Stack {
       serviceToken: jwksGeneratorProvider.serviceToken,
       properties: {
         // Bump to force an update
-        Version: '1',
+        Version: '2',
       },
     });
 
@@ -88,6 +88,21 @@ export class BlogCdkJwksStack extends Stack {
       .addMethod('GET', jwksIntegration, {
         methodResponses: [{ statusCode: '200' }],
       });
+
+    const encoderFunction = new NodejsFunction(this, 'BlogCdkJwtEncoderFn', {
+      ...lambdaProps,
+      entry: join(__dirname, './encoder-ring.ts'),
+    });
+    secret.grantRead(encoderFunction);
+
+    restApi.root.addResource('encode').addMethod('POST', new LambdaIntegration(encoderFunction));
+
+    const decoderFunction = new NodejsFunction(this, 'BlogCdkJwtDecoderFn', {
+      ...lambdaProps,
+      entry: join(__dirname, './decoder-ring.ts'),
+    });
+
+    restApi.root.addResource('decode').addMethod('POST', new LambdaIntegration(decoderFunction));
   }
 }
 

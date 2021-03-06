@@ -27,7 +27,7 @@ export const handler = async (): Promise<void> => {
       .putObject({
         Bucket: `${process.env.BUCKET_ID}`,
         Key: 'jwks.json',
-        Body: JSON.stringify(publicKey),
+        Body: JSON.stringify({ keys: [publicKey] }),
         ACL: 'bucket-owner-full-control',
       })
       .promise();
