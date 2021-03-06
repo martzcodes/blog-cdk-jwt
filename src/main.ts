@@ -13,9 +13,9 @@ export class BlogCdkJwksStack extends Stack {
     super(scope, id, props);
 
     const SECRET_ID = 'BlogCdkSecret';
-    const BUCKET_ID = 'BlogCdkJwksBucket';
     const secret = new Secret(this, SECRET_ID);
 
+    const BUCKET_ID = 'BlogCdkJwksBucket';
     const jwksBucket = new Bucket(this, BUCKET_ID, {
       accessControl: BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
       bucketName: `blog-cdk-jwks-bucket-${this.account}`,
