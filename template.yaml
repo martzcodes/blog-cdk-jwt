@@ -1,0 +1,815 @@
+Resources:
+  BlogCdkSecret2D6B12B4:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      GenerateSecretString: {}
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkSecret/Resource
+  BlogCdkJwksBucketAAB673DE:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: BucketOwnerFullControl
+      BucketName:
+        Fn::Join:
+          - ""
+          - - blog-cdk-jwks-bucket-
+            - Ref: AWS::AccountId
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: aws-cdk:auto-delete-objects
+          Value: "true"
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksBucket/Resource
+  BlogCdkJwksBucketPolicy228F420E:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: BlogCdkJwksBucketAAB673DE
+      PolicyDocument:
+        Statement:
+          - Action:
+              - s3:GetBucket*
+              - s3:List*
+              - s3:DeleteObject*
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::GetAtt:
+                  - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
+                  - Arn
+            Resource:
+              - Fn::GetAtt:
+                  - BlogCdkJwksBucketAAB673DE
+                  - Arn
+              - Fn::Join:
+                  - ""
+                  - - Fn::GetAtt:
+                        - BlogCdkJwksBucketAAB673DE
+                        - Arn
+                    - /*
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksBucket/Policy/Resource
+  BlogCdkJwksBucketAutoDeleteObjectsCustomResource8F7EA4AE:
+    Type: Custom::S3AutoDeleteObjects
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F
+          - Arn
+      BucketName:
+        Ref: BlogCdkJwksBucketAAB673DE
+    DependsOn:
+      - BlogCdkJwksBucketPolicy228F420E
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksBucket/AutoDeleteObjectsCustomResource/Default
+  CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+      ManagedPolicyArns:
+        - Fn::Sub: arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role
+  CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket:
+          Ref: AssetParameters1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1S3Bucket4842F32D
+        S3Key:
+          Fn::Join:
+            - ""
+            - - Fn::Select:
+                  - 0
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParameters1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1S3VersionKeyD0A0B57A
+              - Fn::Select:
+                  - 1
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParameters1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1S3VersionKeyD0A0B57A
+      Timeout: 900
+      MemorySize: 128
+      Handler: __entrypoint__.handler
+      Role:
+        Fn::GetAtt:
+          - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
+          - Arn
+      Runtime: nodejs12.x
+      Description:
+        Fn::Join:
+          - ""
+          - - "Lambda function for auto-deleting objects in "
+            - Ref: BlogCdkJwksBucketAAB673DE
+            - " S3 bucket."
+    DependsOn:
+      - CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler
+      aws:asset:path: /Users/mattmartz/Development/blog/blog-cdk-jwt/node_modules/@aws-cdk/aws-s3/lib/auto-delete-objects-handler
+      aws:asset:property: Code
+  BlogCdkJwksBucketRoleB19C6B03:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: apigateway.amazonaws.com
+        Version: "2012-10-17"
+      RoleName: BlogCdkJwksBucketRole
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksBucketRole/Resource
+  BlogCdkJwksBucketRoleDefaultPolicyC05D2F19:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - s3:GetObject*
+              - s3:GetBucket*
+              - s3:List*
+            Effect: Allow
+            Resource:
+              - Fn::GetAtt:
+                  - BlogCdkJwksBucketAAB673DE
+                  - Arn
+              - Fn::Join:
+                  - ""
+                  - - Fn::GetAtt:
+                        - BlogCdkJwksBucketAAB673DE
+                        - Arn
+                    - /*
+        Version: "2012-10-17"
+      PolicyName: BlogCdkJwksBucketRoleDefaultPolicyC05D2F19
+      Roles:
+        - Ref: BlogCdkJwksBucketRoleB19C6B03
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksBucketRole/DefaultPolicy/Resource
+  BlogCdkJwksGeneratorServiceRoleA7E662AE:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksGenerator/ServiceRole/Resource
+  BlogCdkJwksGeneratorServiceRoleDefaultPolicy509E582E:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - secretsmanager:PutSecretValue
+              - secretsmanager:UpdateSecret
+            Effect: Allow
+            Resource:
+              Ref: BlogCdkSecret2D6B12B4
+          - Action:
+              - s3:DeleteObject*
+              - s3:PutObject*
+              - s3:Abort*
+            Effect: Allow
+            Resource:
+              - Fn::GetAtt:
+                  - BlogCdkJwksBucketAAB673DE
+                  - Arn
+              - Fn::Join:
+                  - ""
+                  - - Fn::GetAtt:
+                        - BlogCdkJwksBucketAAB673DE
+                        - Arn
+                    - /*
+        Version: "2012-10-17"
+      PolicyName: BlogCdkJwksGeneratorServiceRoleDefaultPolicy509E582E
+      Roles:
+        - Ref: BlogCdkJwksGeneratorServiceRoleA7E662AE
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksGenerator/ServiceRole/DefaultPolicy/Resource
+  BlogCdkJwksGeneratorDD7E5362:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket:
+          Ref: AssetParameters11a865ea206b5ffd097bc6cd2f8279721d716ddbde73fd0172fa41e6371166afS3BucketA029707D
+        S3Key:
+          Fn::Join:
+            - ""
+            - - Fn::Select:
+                  - 0
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParameters11a865ea206b5ffd097bc6cd2f8279721d716ddbde73fd0172fa41e6371166afS3VersionKey9021AD85
+              - Fn::Select:
+                  - 1
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParameters11a865ea206b5ffd097bc6cd2f8279721d716ddbde73fd0172fa41e6371166afS3VersionKey9021AD85
+      Role:
+        Fn::GetAtt:
+          - BlogCdkJwksGeneratorServiceRoleA7E662AE
+          - Arn
+      Environment:
+        Variables:
+          SECRET_ID:
+            Ref: BlogCdkSecret2D6B12B4
+          BUCKET_ID:
+            Ref: BlogCdkJwksBucketAAB673DE
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+      Handler: index.handler
+      Runtime: nodejs14.x
+      Timeout: 30
+    DependsOn:
+      - BlogCdkJwksGeneratorServiceRoleDefaultPolicy509E582E
+      - BlogCdkJwksGeneratorServiceRoleA7E662AE
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksGenerator/Resource
+      aws:asset:path: /Users/mattmartz/Development/blog/blog-cdk-jwt/cdk.out/asset.11a865ea206b5ffd097bc6cd2f8279721d716ddbde73fd0172fa41e6371166af
+      aws:asset:original-path: /Users/mattmartz/Development/blog/blog-cdk-jwt
+      aws:asset:is-bundled: true
+      aws:asset:property: Code
+  BlogCdkJwksGenerateProviderframeworkonEventServiceRoleFE6B6089:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksGenerateProvider/framework-onEvent/ServiceRole/Resource
+  BlogCdkJwksGenerateProviderframeworkonEventServiceRoleDefaultPolicy7A11F125:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action: lambda:InvokeFunction
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - BlogCdkJwksGeneratorDD7E5362
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: BlogCdkJwksGenerateProviderframeworkonEventServiceRoleDefaultPolicy7A11F125
+      Roles:
+        - Ref: BlogCdkJwksGenerateProviderframeworkonEventServiceRoleFE6B6089
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksGenerateProvider/framework-onEvent/ServiceRole/DefaultPolicy/Resource
+  BlogCdkJwksGenerateProviderframeworkonEvent0C0EF429:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket:
+          Ref: AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cS3BucketEAC9DD43
+        S3Key:
+          Fn::Join:
+            - ""
+            - - Fn::Select:
+                  - 0
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cS3VersionKeyDD9AE9E7
+              - Fn::Select:
+                  - 1
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cS3VersionKeyDD9AE9E7
+      Role:
+        Fn::GetAtt:
+          - BlogCdkJwksGenerateProviderframeworkonEventServiceRoleFE6B6089
+          - Arn
+      Description: AWS CDK resource provider framework - onEvent (blog-cdk-jwks-dev/BlogCdkJwksGenerateProvider)
+      Environment:
+        Variables:
+          USER_ON_EVENT_FUNCTION_ARN:
+            Fn::GetAtt:
+              - BlogCdkJwksGeneratorDD7E5362
+              - Arn
+      Handler: framework.onEvent
+      Runtime: nodejs12.x
+      Timeout: 900
+    DependsOn:
+      - BlogCdkJwksGenerateProviderframeworkonEventServiceRoleDefaultPolicy7A11F125
+      - BlogCdkJwksGenerateProviderframeworkonEventServiceRoleFE6B6089
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksGenerateProvider/framework-onEvent/Resource
+      aws:asset:path: /Users/mattmartz/Development/blog/blog-cdk-jwt/node_modules/@aws-cdk/custom-resources/lib/provider-framework/runtime
+      aws:asset:original-path: /Users/mattmartz/Development/blog/blog-cdk-jwt/node_modules/@aws-cdk/custom-resources/lib/provider-framework/runtime
+      aws:asset:is-bundled: false
+      aws:asset:property: Code
+  BlogCdkJwksGenerateResource:
+    Type: AWS::CloudFormation::CustomResource
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - BlogCdkJwksGenerateProviderframeworkonEvent0C0EF429
+          - Arn
+      Version: "2"
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksGenerateResource/Default
+  BlogCdkJwksApiD670D619:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: BlogCdkJwksApi
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Resource
+  BlogCdkJwksApiCloudWatchRoleEB7745F5:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: apigateway.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/CloudWatchRole/Resource
+  BlogCdkJwksApiAccount201E3DE0:
+    Type: AWS::ApiGateway::Account
+    Properties:
+      CloudWatchRoleArn:
+        Fn::GetAtt:
+          - BlogCdkJwksApiCloudWatchRoleEB7745F5
+          - Arn
+    DependsOn:
+      - BlogCdkJwksApiD670D619
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Account
+  BlogCdkJwksApiDeployment3D9B1F0F5d502ce34029769ce0c55d8d6c1830b8:
+    Type: AWS::ApiGateway::Deployment
+    Properties:
+      RestApiId:
+        Ref: BlogCdkJwksApiD670D619
+      Description: Automatically created by the RestApi construct
+    DependsOn:
+      - BlogCdkJwksApiwellknownjwksjsonGETF029835A
+      - BlogCdkJwksApiwellknownjwksjsonDD32F4EF
+      - BlogCdkJwksApiwellknownD5A04E64
+      - BlogCdkJwksApidecodePOSTC5AD18F9
+      - BlogCdkJwksApidecode0FAA2B86
+      - BlogCdkJwksApiencodePOST1331ABF0
+      - BlogCdkJwksApiencodeAD229C43
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Deployment/Resource
+  BlogCdkJwksApiDeploymentStageprodC2E58CED:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      RestApiId:
+        Ref: BlogCdkJwksApiD670D619
+      DeploymentId:
+        Ref: BlogCdkJwksApiDeployment3D9B1F0F5d502ce34029769ce0c55d8d6c1830b8
+      StageName: prod
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/DeploymentStage.prod/Resource
+  BlogCdkJwksApiwellknownD5A04E64:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId:
+        Fn::GetAtt:
+          - BlogCdkJwksApiD670D619
+          - RootResourceId
+      PathPart: .well-known
+      RestApiId:
+        Ref: BlogCdkJwksApiD670D619
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Default/.well-known/Resource
+  BlogCdkJwksApiwellknownjwksjsonDD32F4EF:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId:
+        Ref: BlogCdkJwksApiwellknownD5A04E64
+      PathPart: jwks.json
+      RestApiId:
+        Ref: BlogCdkJwksApiD670D619
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Default/.well-known/jwks.json/Resource
+  BlogCdkJwksApiwellknownjwksjsonGETF029835A:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: GET
+      ResourceId:
+        Ref: BlogCdkJwksApiwellknownjwksjsonDD32F4EF
+      RestApiId:
+        Ref: BlogCdkJwksApiD670D619
+      AuthorizationType: NONE
+      Integration:
+        Credentials:
+          Fn::GetAtt:
+            - BlogCdkJwksBucketRoleB19C6B03
+            - Arn
+        IntegrationHttpMethod: GET
+        IntegrationResponses:
+          - StatusCode: "200"
+          - StatusCode: "400"
+        Type: AWS
+        Uri:
+          Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :apigateway:us-east-1:s3:path/
+              - Ref: BlogCdkJwksBucketAAB673DE
+              - /jwks.json
+      MethodResponses:
+        - StatusCode: "200"
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Default/.well-known/jwks.json/GET/Resource
+  BlogCdkJwksApiencodeAD229C43:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId:
+        Fn::GetAtt:
+          - BlogCdkJwksApiD670D619
+          - RootResourceId
+      PathPart: encode
+      RestApiId:
+        Ref: BlogCdkJwksApiD670D619
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Default/encode/Resource
+  BlogCdkJwksApiencodePOSTApiPermissionblogcdkjwksdevBlogCdkJwksApi9BE6C7B1POSTencodeA9156826:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - BlogCdkJwtEncoderFn46E48CD7
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:us-east-1:"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: BlogCdkJwksApiD670D619
+            - /
+            - Ref: BlogCdkJwksApiDeploymentStageprodC2E58CED
+            - /POST/encode
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Default/encode/POST/ApiPermission.blogcdkjwksdevBlogCdkJwksApi9BE6C7B1.POST..encode
+  BlogCdkJwksApiencodePOSTApiPermissionTestblogcdkjwksdevBlogCdkJwksApi9BE6C7B1POSTencode242E1BFF:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - BlogCdkJwtEncoderFn46E48CD7
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:us-east-1:"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: BlogCdkJwksApiD670D619
+            - /test-invoke-stage/POST/encode
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Default/encode/POST/ApiPermission.Test.blogcdkjwksdevBlogCdkJwksApi9BE6C7B1.POST..encode
+  BlogCdkJwksApiencodePOST1331ABF0:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: POST
+      ResourceId:
+        Ref: BlogCdkJwksApiencodeAD229C43
+      RestApiId:
+        Ref: BlogCdkJwksApiD670D619
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :apigateway:us-east-1:lambda:path/2015-03-31/functions/
+              - Fn::GetAtt:
+                  - BlogCdkJwtEncoderFn46E48CD7
+                  - Arn
+              - /invocations
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Default/encode/POST/Resource
+  BlogCdkJwksApidecode0FAA2B86:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId:
+        Fn::GetAtt:
+          - BlogCdkJwksApiD670D619
+          - RootResourceId
+      PathPart: decode
+      RestApiId:
+        Ref: BlogCdkJwksApiD670D619
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Default/decode/Resource
+  BlogCdkJwksApidecodePOSTApiPermissionblogcdkjwksdevBlogCdkJwksApi9BE6C7B1POSTdecodeFDEAC919:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - BlogCdkJwtDecoderFnEF8DE106
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:us-east-1:"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: BlogCdkJwksApiD670D619
+            - /
+            - Ref: BlogCdkJwksApiDeploymentStageprodC2E58CED
+            - /POST/decode
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Default/decode/POST/ApiPermission.blogcdkjwksdevBlogCdkJwksApi9BE6C7B1.POST..decode
+  BlogCdkJwksApidecodePOSTApiPermissionTestblogcdkjwksdevBlogCdkJwksApi9BE6C7B1POSTdecodeA42EDB41:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - BlogCdkJwtDecoderFnEF8DE106
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:us-east-1:"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: BlogCdkJwksApiD670D619
+            - /test-invoke-stage/POST/decode
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Default/decode/POST/ApiPermission.Test.blogcdkjwksdevBlogCdkJwksApi9BE6C7B1.POST..decode
+  BlogCdkJwksApidecodePOSTC5AD18F9:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: POST
+      ResourceId:
+        Ref: BlogCdkJwksApidecode0FAA2B86
+      RestApiId:
+        Ref: BlogCdkJwksApiD670D619
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :apigateway:us-east-1:lambda:path/2015-03-31/functions/
+              - Fn::GetAtt:
+                  - BlogCdkJwtDecoderFnEF8DE106
+                  - Arn
+              - /invocations
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwksApi/Default/decode/POST/Resource
+  BlogCdkJwtEncoderFnServiceRole0A52B914:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwtEncoderFn/ServiceRole/Resource
+  BlogCdkJwtEncoderFnServiceRoleDefaultPolicyAFE933F5:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - secretsmanager:GetSecretValue
+              - secretsmanager:DescribeSecret
+            Effect: Allow
+            Resource:
+              Ref: BlogCdkSecret2D6B12B4
+        Version: "2012-10-17"
+      PolicyName: BlogCdkJwtEncoderFnServiceRoleDefaultPolicyAFE933F5
+      Roles:
+        - Ref: BlogCdkJwtEncoderFnServiceRole0A52B914
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwtEncoderFn/ServiceRole/DefaultPolicy/Resource
+  BlogCdkJwtEncoderFn46E48CD7:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket:
+          Ref: AssetParameters4388e6eaa77cbb7ddd696d2141a800605433497b969b8e0fe760bb9360661431S3Bucket8F1BD0C8
+        S3Key:
+          Fn::Join:
+            - ""
+            - - Fn::Select:
+                  - 0
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParameters4388e6eaa77cbb7ddd696d2141a800605433497b969b8e0fe760bb9360661431S3VersionKeyC8556677
+              - Fn::Select:
+                  - 1
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParameters4388e6eaa77cbb7ddd696d2141a800605433497b969b8e0fe760bb9360661431S3VersionKeyC8556677
+      Role:
+        Fn::GetAtt:
+          - BlogCdkJwtEncoderFnServiceRole0A52B914
+          - Arn
+      Environment:
+        Variables:
+          SECRET_ID:
+            Ref: BlogCdkSecret2D6B12B4
+          BUCKET_ID:
+            Ref: BlogCdkJwksBucketAAB673DE
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+      Handler: index.handler
+      Runtime: nodejs14.x
+    DependsOn:
+      - BlogCdkJwtEncoderFnServiceRoleDefaultPolicyAFE933F5
+      - BlogCdkJwtEncoderFnServiceRole0A52B914
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwtEncoderFn/Resource
+      aws:asset:path: /Users/mattmartz/Development/blog/blog-cdk-jwt/cdk.out/asset.4388e6eaa77cbb7ddd696d2141a800605433497b969b8e0fe760bb9360661431
+      aws:asset:original-path: /Users/mattmartz/Development/blog/blog-cdk-jwt
+      aws:asset:is-bundled: true
+      aws:asset:property: Code
+  BlogCdkJwtDecoderFnServiceRoleE4120408:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwtDecoderFn/ServiceRole/Resource
+  BlogCdkJwtDecoderFnEF8DE106:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket:
+          Ref: AssetParameters79974cdd6e9c4bc0c1dd651e92bfc9b03ae30b7dfc9762ace0507e17562bff26S3BucketCAB75668
+        S3Key:
+          Fn::Join:
+            - ""
+            - - Fn::Select:
+                  - 0
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParameters79974cdd6e9c4bc0c1dd651e92bfc9b03ae30b7dfc9762ace0507e17562bff26S3VersionKey81630285
+              - Fn::Select:
+                  - 1
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParameters79974cdd6e9c4bc0c1dd651e92bfc9b03ae30b7dfc9762ace0507e17562bff26S3VersionKey81630285
+      Role:
+        Fn::GetAtt:
+          - BlogCdkJwtDecoderFnServiceRoleE4120408
+          - Arn
+      Environment:
+        Variables:
+          SECRET_ID:
+            Ref: BlogCdkSecret2D6B12B4
+          BUCKET_ID:
+            Ref: BlogCdkJwksBucketAAB673DE
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+      Handler: index.handler
+      Runtime: nodejs14.x
+    DependsOn:
+      - BlogCdkJwtDecoderFnServiceRoleE4120408
+    Metadata:
+      aws:cdk:path: blog-cdk-jwks-dev/BlogCdkJwtDecoderFn/Resource
+      aws:asset:path: /Users/mattmartz/Development/blog/blog-cdk-jwt/cdk.out/asset.79974cdd6e9c4bc0c1dd651e92bfc9b03ae30b7dfc9762ace0507e17562bff26
+      aws:asset:original-path: /Users/mattmartz/Development/blog/blog-cdk-jwt
+      aws:asset:is-bundled: true
+      aws:asset:property: Code
+Parameters:
+  AssetParameters1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1S3Bucket4842F32D:
+    Type: String
+    Description: S3 bucket for asset "1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1"
+  AssetParameters1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1S3VersionKeyD0A0B57A:
+    Type: String
+    Description: S3 key for asset version "1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1"
+  AssetParameters1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1ArtifactHash0128B949:
+    Type: String
+    Description: Artifact hash for asset "1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1"
+  AssetParameters11a865ea206b5ffd097bc6cd2f8279721d716ddbde73fd0172fa41e6371166afS3BucketA029707D:
+    Type: String
+    Description: S3 bucket for asset "11a865ea206b5ffd097bc6cd2f8279721d716ddbde73fd0172fa41e6371166af"
+  AssetParameters11a865ea206b5ffd097bc6cd2f8279721d716ddbde73fd0172fa41e6371166afS3VersionKey9021AD85:
+    Type: String
+    Description: S3 key for asset version "11a865ea206b5ffd097bc6cd2f8279721d716ddbde73fd0172fa41e6371166af"
+  AssetParameters11a865ea206b5ffd097bc6cd2f8279721d716ddbde73fd0172fa41e6371166afArtifactHashAAE713E3:
+    Type: String
+    Description: Artifact hash for asset "11a865ea206b5ffd097bc6cd2f8279721d716ddbde73fd0172fa41e6371166af"
+  AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cS3BucketEAC9DD43:
+    Type: String
+    Description: S3 bucket for asset "c691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49c"
+  AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cS3VersionKeyDD9AE9E7:
+    Type: String
+    Description: S3 key for asset version "c691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49c"
+  AssetParametersc691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49cArtifactHash627DAAA7:
+    Type: String
+    Description: Artifact hash for asset "c691172cdeefa2c91b5a2907f9d81118e47597634943344795f1a844192dd49c"
+  AssetParameters4388e6eaa77cbb7ddd696d2141a800605433497b969b8e0fe760bb9360661431S3Bucket8F1BD0C8:
+    Type: String
+    Description: S3 bucket for asset "4388e6eaa77cbb7ddd696d2141a800605433497b969b8e0fe760bb9360661431"
+  AssetParameters4388e6eaa77cbb7ddd696d2141a800605433497b969b8e0fe760bb9360661431S3VersionKeyC8556677:
+    Type: String
+    Description: S3 key for asset version "4388e6eaa77cbb7ddd696d2141a800605433497b969b8e0fe760bb9360661431"
+  AssetParameters4388e6eaa77cbb7ddd696d2141a800605433497b969b8e0fe760bb9360661431ArtifactHashE9C1E919:
+    Type: String
+    Description: Artifact hash for asset "4388e6eaa77cbb7ddd696d2141a800605433497b969b8e0fe760bb9360661431"
+  AssetParameters79974cdd6e9c4bc0c1dd651e92bfc9b03ae30b7dfc9762ace0507e17562bff26S3BucketCAB75668:
+    Type: String
+    Description: S3 bucket for asset "79974cdd6e9c4bc0c1dd651e92bfc9b03ae30b7dfc9762ace0507e17562bff26"
+  AssetParameters79974cdd6e9c4bc0c1dd651e92bfc9b03ae30b7dfc9762ace0507e17562bff26S3VersionKey81630285:
+    Type: String
+    Description: S3 key for asset version "79974cdd6e9c4bc0c1dd651e92bfc9b03ae30b7dfc9762ace0507e17562bff26"
+  AssetParameters79974cdd6e9c4bc0c1dd651e92bfc9b03ae30b7dfc9762ace0507e17562bff26ArtifactHash79577960:
+    Type: String
+    Description: Artifact hash for asset "79974cdd6e9c4bc0c1dd651e92bfc9b03ae30b7dfc9762ace0507e17562bff26"
+Outputs:
+  BlogCdkJwksApiEndpoint8ADFD8C1:
+    Value:
+      Fn::Join:
+        - ""
+        - - https://
+          - Ref: BlogCdkJwksApiD670D619
+          - .execute-api.us-east-1.
+          - Ref: AWS::URLSuffix
+          - /
+          - Ref: BlogCdkJwksApiDeploymentStageprodC2E58CED
+          - /
+
